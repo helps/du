@@ -9,7 +9,7 @@ get '/' do
   "<h1>nothing to see</h1>"
 end
 
-get '/u' do
+post '/u' do
   d = params[:d]
   sql = "insert into users(userid, password, other) values"
   d.split('|').each do |l|
