@@ -1,21 +1,20 @@
 require "sinatra"
 require "sinatra/activerecord"
 require "./users"
-get '/index' do
-  "nothing to see"
+
+set environments: production
+set port: 80
+
+get '/' do
+  "<h1>nothing to see</h1>"
 end
 
 get '/u' do
   d = params[:d]
-  users = []
-  User.transaction do
-    d.split('|').each do |l|
-      begin
-        fs = l.split(',')
-        User.create(userid: fs[0], password: fs[1], other: fs[2])
-      rescue Exception => e
-
-      end
-    end
+  sql = "insert into users(userid, password, other) values"
+  d.split('|').each do |l|
+    fs = l.split(',')
+    sql << "('#{fs[0]}','#{fs[1]}','#{fs[2]}'),"
   end
+  ActiveRecord::Base.connection.execute(sql.chop)
 end
