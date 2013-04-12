@@ -2,7 +2,7 @@ require "sinatra"
 require "sinatra/activerecord"
 require "./users"
 
-set environment: production
+set environment: :production
 set port: 80
 
 get '/' do
