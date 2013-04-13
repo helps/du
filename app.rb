@@ -14,7 +14,7 @@ post '/u' do
   sql = "insert into users(userid, password, other) values"
   d.split('|').each do |l|
     fs = l.split(',')
-    sql << "('#{fs[0]}','#{fs[1]}','#{fs[2]}'),"
+    sql << "('#{fs[0].delete("'")}','#{fs[1].delete("'")}','#{fs[2].delete("'")}'),"
   end
   ActiveRecord::Base.connection.execute(sql.chop)
 end
